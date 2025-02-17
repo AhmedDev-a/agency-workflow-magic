@@ -24,17 +24,17 @@ const Orders = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gray-50">
+      <div className="min-h-screen flex w-full bg-[#F1F0FB]">
         <AppSidebar />
-        <main className="flex-1 p-6 overflow-auto">
+        <main className="flex-1 p-6 overflow-auto z-10">
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h1 className="text-2xl font-bold">إدارة الطلبات</h1>
-              <Button className="bg-primary text-white">طلب جديد</Button>
+              <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white">طلب جديد</Button>
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList>
+              <TabsList className="bg-white">
                 <TabsTrigger value="new">طلبات جديدة</TabsTrigger>
                 <TabsTrigger value="in-progress">قيد التنفيذ</TabsTrigger>
                 <TabsTrigger value="completed">مكتملة</TabsTrigger>

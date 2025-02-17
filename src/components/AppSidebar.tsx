@@ -57,30 +57,30 @@ const mainModules = [
     title: "الرحلات",
     icon: PlaneIcon,
     items: [
-      { title: "الرحلات الثابتة", icon: PlaneLandingIcon },
-      { title: "الرحلات الخاصة", icon: StarIcon },
-      { title: "خدمات أخرى", icon: Building2Icon },
+      { title: "الرحلات الثابتة", icon: PlaneLandingIcon, path: "/trips?tab=fixed" },
+      { title: "الرحلات الخاصة", icon: StarIcon, path: "/trips?tab=private" },
+      { title: "خدمات أخرى", icon: Building2Icon, path: "/trips?tab=services" },
     ],
   },
   {
     title: "الحسابات",
     icon: BarChart4Icon,
     items: [
-      { title: "شجرة الحسابات", icon: LayoutListIcon },
-      { title: "قيود اليومية", icon: ScrollTextIcon },
-      { title: "ميزان المراجعة", icon: ReceiptIcon },
-      { title: "حسابات العملاء", icon: WalletIcon },
-      { title: "حسابات الموردين", icon: CircleDollarSignIcon },
-      { title: "الميزانية العمومية", icon: BarChart2Icon },
-      { title: "قائمة الدخل", icon: BarChart4Icon },
-      { title: "الخزنة", icon: LandmarkIcon },
+      { title: "شجرة الحسابات", icon: LayoutListIcon, path: "/accounts/chart" },
+      { title: "قيود اليومية", icon: ScrollTextIcon, path: "/accounts/journal" },
+      { title: "ميزان المراجعة", icon: ReceiptIcon, path: "/accounts/trial-balance" },
+      { title: "حسابات العملاء", icon: WalletIcon, path: "/accounts/customers" },
+      { title: "حسابات الموردين", icon: CircleDollarSignIcon, path: "/accounts/suppliers" },
+      { title: "الميزانية العمومية", icon: BarChart2Icon, path: "/accounts/balance-sheet" },
+      { title: "قائمة الدخل", icon: BarChart4Icon, path: "/accounts/income-statement" },
+      { title: "الخزنة", icon: LandmarkIcon, path: "/accounts/treasury" },
     ],
   },
 ];
 
 const AppSidebar = () => {
   return (
-    <Sidebar>
+    <Sidebar className="z-20">
       <SidebarContent>
         {mainModules.map((module) => (
           <SidebarGroup key={module.title}>

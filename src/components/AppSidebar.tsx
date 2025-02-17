@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Sidebar,
@@ -39,18 +38,19 @@ const mainModules = [
     title: "الرئيسية",
     icon: HomeIcon,
     items: [],
+    path: "/",
   },
   {
     title: "المبيعات",
     icon: BriefcaseIcon,
     items: [
-      { title: "الاتصالات", icon: PhoneCallIcon },
-      { title: "الزيارات", icon: FootprintsIcon },
-      { title: "العملاء", icon: UsersIcon },
-      { title: "المتطلبات", icon: ClipboardCheckIcon },
-      { title: "التسعير", icon: DollarSignIcon },
-      { title: "المفاوضات", icon: HandshakeIcon },
-      { title: "الطلبات", icon: ShoppingCartIcon },
+      { title: "الاتصالات", icon: PhoneCallIcon, path: "/calls" },
+      { title: "الزيارات", icon: FootprintsIcon, path: "/visits" },
+      { title: "العملاء", icon: UsersIcon, path: "/customers" },
+      { title: "المتطلبات", icon: ClipboardCheckIcon, path: "/requirements" },
+      { title: "التسعير", icon: DollarSignIcon, path: "/pricing" },
+      { title: "المفاوضات", icon: HandshakeIcon, path: "/negotiations" },
+      { title: "الطلبات", icon: ShoppingCartIcon, path: "/orders" },
     ],
   },
   {
@@ -90,7 +90,7 @@ const AppSidebar = () => {
                 {module.items.length === 0 ? (
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <a href="#" className="flex items-center gap-2 px-4 py-2">
+                      <a href={module.path} className="flex items-center gap-2 px-4 py-2">
                         <module.icon className="w-5 h-5" />
                         <span>{module.title}</span>
                       </a>
@@ -100,7 +100,7 @@ const AppSidebar = () => {
                   module.items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
-                        <a href="#" className="flex items-center gap-2 px-4 py-2">
+                        <a href={item.path} className="flex items-center gap-2 px-4 py-2">
                           <item.icon className="w-5 h-5" />
                           <span>{item.title}</span>
                         </a>

@@ -21,7 +21,7 @@ import {
   DollarSignIcon,
   HandshakeIcon,
   ShoppingCartIcon,
-  WalkIcon,
+  FootprintsIcon,
   PlaneLandingIcon,
   StarIcon,
   Building2Icon,
@@ -45,7 +45,7 @@ const mainModules = [
     icon: BriefcaseIcon,
     items: [
       { title: "الاتصالات", icon: PhoneCallIcon },
-      { title: "الزيارات", icon: WalkIcon },
+      { title: "الزيارات", icon: FootprintsIcon },
       { title: "العملاء", icon: UsersIcon },
       { title: "المتطلبات", icon: ClipboardCheckIcon },
       { title: "التسعير", icon: DollarSignIcon },

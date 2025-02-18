@@ -20,6 +20,8 @@ import SupplierAccounts from "./pages/accounts/SupplierAccounts";
 import BalanceSheet from "./pages/accounts/BalanceSheet";
 import IncomeStatement from "./pages/accounts/IncomeStatement";
 import Treasury from "./pages/accounts/Treasury";
+import Visits from "./pages/Visits";
+import Calls from "./pages/Calls";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,8 @@ const App = () => (
           <Route path="/negotiations" element={<Negotiations />} />
           <Route path="/trips" element={<Trips />} />
           <Route path="/requirements" element={<Requirements />} />
+          <Route path="/visits" element={<Visits />} />
+          <Route path="/calls" element={<Calls />} />
           <Route path="/accounts/chart" element={<AccountsChart />} />
           <Route path="/accounts/journal" element={<Journal />} />
           <Route path="/accounts/trial-balance" element={<TrialBalance />} />

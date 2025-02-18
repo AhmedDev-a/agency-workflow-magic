@@ -46,6 +46,8 @@ const mainModules = [
     title: "المبيعات",
     icon: BriefcaseIcon,
     items: [
+      { title: "الاتصالات", icon: PhoneCallIcon, path: "/calls" },
+      { title: "الزيارات", icon: FootprintsIcon, path: "/visits" },
       { title: "العملاء", icon: UsersIcon, path: "/customers" },
       { title: "المتطلبات", icon: ClipboardCheckIcon, path: "/requirements" },
       { title: "التسعير", icon: DollarSignIcon, path: "/pricing" },
@@ -80,7 +82,7 @@ const mainModules = [
 
 const AppSidebar = () => {
   return (
-    <Sidebar className="z-20 border-l">
+    <Sidebar className="h-screen sticky top-0 right-0 z-30 bg-white">
       <SidebarContent>
         {mainModules.map((module) => (
           <SidebarGroup key={module.title}>

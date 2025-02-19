@@ -17,13 +17,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
+import { Input } from "@/components/ui/input";
 import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Clock, FileCheck, FileEdit, FileText, Send, UserCheck } from "lucide-react";
+import { 
+  FileCheck, 
+  FileEdit, 
+  Send, 
+  Clock,
+  Ban,
+  AlertCircle,
+  CheckCircle2
+} from "lucide-react";
 
 const Orders = () => {
   const [activeTab, setActiveTab] = useState("new");
@@ -37,12 +46,18 @@ const Orders = () => {
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-2xl font-bold">إدارة الطلبات</h1>
-                <p className="text-gray-500 mt-1">متابعة وإدارة طلبات العملاء عبر مراحل العمل المختلفة</p>
+                <p className="text-gray-500 mt-1">متابعة وإدارة طلبات العملاء عبر مراحل ال��مل المختلفة</p>
               </div>
-              <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white">
-                <FileText className="ml-2 h-4 w-4" />
-                طلب جديد
-              </Button>
+              <div className="flex gap-4">
+                <Button variant="outline">
+                  <FileCheck className="ml-2 h-4 w-4" />
+                  تصدير التقرير
+                </Button>
+                <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white">
+                  <FileEdit className="ml-2 h-4 w-4" />
+                  طلب جديد
+                </Button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -87,6 +102,17 @@ const Orders = () => {
               </Card>
             </div>
 
+            <div className="flex gap-4 items-center">
+              <Input
+                className="max-w-sm"
+                placeholder="البحث في الطلبات..."
+                type="search"
+              />
+              <Button variant="outline">
+                تصفية النتائج
+              </Button>
+            </div>
+
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="bg-white">
                 <TabsTrigger value="new">طلبات جديدة</TabsTrigger>
@@ -110,6 +136,7 @@ const Orders = () => {
                           <TableHead>العميل</TableHead>
                           <TableHead>الخدمة</TableHead>
                           <TableHead>تاريخ الطلب</TableHead>
+                          <TableHead>الأولوية</TableHead>
                           <TableHead>الحالة</TableHead>
                           <TableHead>الإجراءات</TableHead>
                         </TableRow>
@@ -121,7 +148,13 @@ const Orders = () => {
                           <TableCell>رحلة عمرة</TableCell>
                           <TableCell>2024/03/15</TableCell>
                           <TableCell>
-                            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">
+                            <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">
+                              عاجل
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <Clock className="h-3 w-3 ml-1" />
                               جديد
                             </span>
                           </TableCell>
@@ -140,6 +173,10 @@ const Orders = () => {
                                 <DropdownMenuItem className="flex items-center">
                                   <Clock className="ml-2 h-4 w-4" />
                                   تأجيل المعالجة
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center text-red-600">
+                                  <Ban className="ml-2 h-4 w-4" />
+                                  رفض الطلب
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
@@ -164,6 +201,7 @@ const Orders = () => {
                           <TableHead>العميل</TableHead>
                           <TableHead>الخدمة</TableHead>
                           <TableHead>السعر المقترح</TableHead>
+                          <TableHead>المسؤول</TableHead>
                           <TableHead>الحالة</TableHead>
                           <TableHead>الإجراءات</TableHead>
                         </TableRow>
@@ -174,8 +212,10 @@ const Orders = () => {
                           <TableCell>محمد علي</TableCell>
                           <TableCell>باقة شهر عسل</TableCell>
                           <TableCell>15,000 ر.س</TableCell>
+                          <TableCell>خالد عمر</TableCell>
                           <TableCell>
-                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
+                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <AlertCircle className="h-3 w-3 ml-1" />
                               قيد التسعير
                             </span>
                           </TableCell>
@@ -194,6 +234,67 @@ const Orders = () => {
                                 <DropdownMenuItem className="flex items-center">
                                   <FileEdit className="ml-2 h-4 w-4" />
                                   تعديل التسعير
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="execution" className="mt-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>طلبات قيد التنف��ذ</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>رقم الطلب</TableHead>
+                          <TableHead>العميل</TableHead>
+                          <TableHead>الخدمة</TableHead>
+                          <TableHead>تاريخ البدء</TableHead>
+                          <TableHead>تاريخ التسليم</TableHead>
+                          <TableHead>الحالة</TableHead>
+                          <TableHead>الإجراءات</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>#ORD005</TableCell>
+                          <TableCell>محمد علي</TableCell>
+                          <TableCell>رحلة عائلية</TableCell>
+                          <TableCell>2024/03/14</TableCell>
+                          <TableCell>2024/03/25</TableCell>
+                          <TableCell>
+                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <CheckCircle2 className="h-3 w-3 ml-1" />
+                              قيد التنفيذ
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm">
+                                  الإجراءات
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem className="flex items-center">
+                                  <FileEdit className="ml-2 h-4 w-4" />
+                                  تحديث الحالة
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center">
+                                  <Send className="ml-2 h-4 w-4" />
+                                  إرسال تقرير
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center text-red-600">
+                                  <Ban className="ml-2 h-4 w-4" />
+                                  تعليق التنفيذ
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
@@ -289,58 +390,6 @@ const Orders = () => {
                             <Button variant="outline" size="sm">
                               عرض التفاصيل
                             </Button>
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="execution" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>طلبات قيد التنفيذ</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>رقم الطلب</TableHead>
-                          <TableHead>العميل</TableHead>
-                          <TableHead>الخدمة</TableHead>
-                          <TableHead>التاريخ</TableHead>
-                          <TableHead>الحالة</TableHead>
-                          <TableHead>الإجراءات</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell>#ORD005</TableCell>
-                          <TableCell>محمد علي</TableCell>
-                          <TableCell>رحلة عائلية</TableCell>
-                          <TableCell>2024/03/14</TableCell>
-                          <TableCell>
-                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
-                              قيد التنفيذ
-                            </span>
-                          </TableCell>
-                          <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button variant="outline" size="sm">
-                                  الإجراءات
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem>عرض التفاصيل</DropdownMenuItem>
-                                <DropdownMenuItem>تحديث الحالة</DropdownMenuItem>
-                                <DropdownMenuItem>إضافة ملاحظة</DropdownMenuItem>
-                                <DropdownMenuItem className="text-red-600">
-                                  إلغاء الطلب
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
                           </TableCell>
                         </TableRow>
                       </TableBody>

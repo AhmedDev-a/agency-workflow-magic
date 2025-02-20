@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Card,
@@ -218,7 +217,7 @@ const AccountsChart = () => {
                   <SelectValue placeholder="نوع الحساب" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">الكل</SelectItem>
+                  <SelectItem value="all">الكل</SelectItem>
                   <SelectItem value="assets">أصول</SelectItem>
                   <SelectItem value="liabilities">خصوم</SelectItem>
                   <SelectItem value="revenue">إيرادات</SelectItem>

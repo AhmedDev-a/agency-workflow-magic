@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Card,
@@ -33,8 +32,18 @@ import {
   Send
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 
 const Negotiations = () => {
+  const { toast } = useToast();
+
+  const handleSendToOrders = () => {
+    toast({
+      title: "تم إرسال الطلب إلى الطلبات",
+      description: "سيتم معالجة الطلب في قسم الطلبات"
+    });
+  };
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
@@ -143,17 +152,16 @@ const Negotiations = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                  className="flex items-center"
+                                  onClick={handleSendToOrders}
+                                >
+                                  <Send className="ml-2 h-4 w-4" />
+                                  إرسال إلى الطلبات
+                                </DropdownMenuItem>
                                 <DropdownMenuItem className="flex items-center">
                                   <FileEdit className="ml-2 h-4 w-4" />
                                   تعديل العرض
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="flex items-center">
-                                  <MessageCircle className="ml-2 h-4 w-4" />
-                                  إضافة ملاحظة
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="flex items-center">
-                                  <Send className="ml-2 h-4 w-4" />
-                                  إرسال للعميل
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>

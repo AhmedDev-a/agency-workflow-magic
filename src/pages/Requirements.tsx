@@ -24,18 +24,49 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 import { 
   FileCheck, 
   FileEdit, 
   ClipboardList, 
   Clock,
   CheckCircle2,
-  XCircle,
-  AlertCircle
+  AlertCircle,
+  Send,
+  Ban
 } from "lucide-react";
 
 const Requirements = () => {
   const [activeTab, setActiveTab] = useState("all");
+  const { toast } = useToast();
+
+  const handleSendToPricing = () => {
+    toast({
+      title: "تم إرسال الطلب للتسعير",
+      description: "سيتم إشعار فريق التسعير للبدء في العمل على الطلب"
+    });
+  };
+
+  const handleSendToNegotiation = () => {
+    toast({
+      title: "تم إرسال الطلب للتفاوض",
+      description: "سيتم إشعار فريق المبيعات للبدء في التفاوض"
+    });
+  };
+
+  const handleSendToAccounting = () => {
+    toast({
+      title: "تم إرسال الطلب للحسابات",
+      description: "سيتم مراجعة الطلب من قبل قسم الحسابات"
+    });
+  };
+
+  const handleSendToExecution = () => {
+    toast({
+      title: "تم إرسال الطلب للتنفيذ",
+      description: "تم اعتماد الطلب من الحسابات وجاهز للتنفيذ"
+    });
+  };
 
   return (
     <SidebarProvider>
@@ -67,31 +98,31 @@ const Requirements = () => {
               
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">قيد المعالجة</CardTitle>
+                  <CardTitle className="text-base">بانتظار التسعير</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-blue-600">15</div>
-                  <p className="text-xs text-gray-500 mt-1">جاري العمل عليها</p>
+                  <div className="text-2xl font-bold text-yellow-600">15</div>
+                  <p className="text-xs text-gray-500 mt-1">جاهزة للتسعير</p>
                 </CardContent>
               </Card>
               
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">مكتملة</CardTitle>
+                  <CardTitle className="text-base">في التفاوض</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-green-600">25</div>
-                  <p className="text-xs text-gray-500 mt-1">تم إنجازها</p>
+                  <div className="text-2xl font-bold text-blue-600">20</div>
+                  <p className="text-xs text-gray-500 mt-1">قيد التفاوض</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">معلقة</CardTitle>
+                  <CardTitle className="text-base">جاهزة للتنفيذ</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-yellow-600">5</div>
-                  <p className="text-xs text-gray-500 mt-1">تحتاج مراجعة</p>
+                  <div className="text-2xl font-bold text-green-600">10</div>
+                  <p className="text-xs text-gray-500 mt-1">معتمدة من الحسابات</p>
                 </CardContent>
               </Card>
             </div>
@@ -107,9 +138,11 @@ const Requirements = () => {
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="bg-white">
                 <TabsTrigger value="all">جميع المتطلبات</TabsTrigger>
-                <TabsTrigger value="pending">قيد المعالجة</TabsTrigger>
-                <TabsTrigger value="completed">مكتملة</TabsTrigger>
-                <TabsTrigger value="on-hold">معلقة</TabsTrigger>
+                <TabsTrigger value="new">جديدة</TabsTrigger>
+                <TabsTrigger value="ready-for-pricing">جاهزة للتسعير</TabsTrigger>
+                <TabsTrigger value="in-negotiation">في التفاوض</TabsTrigger>
+                <TabsTrigger value="accounting">مراجعة الحسابات</TabsTrigger>
+                <TabsTrigger value="execution">قيد التنفيذ</TabsTrigger>
               </TabsList>
 
               <TabsContent value="all" className="mt-6">
@@ -138,9 +171,9 @@ const Requirements = () => {
                           <TableCell>رحلة عمرة لشخصين مع إقامة</TableCell>
                           <TableCell>2024/03/20</TableCell>
                           <TableCell>
-                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
                               <Clock className="h-3 w-3 ml-1" />
-                              قيد المعالجة
+                              جاهز للتسعير
                             </span>
                           </TableCell>
                           <TableCell>
@@ -151,18 +184,22 @@ const Requirements = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="flex items-center">
-                                  <FileCheck className="ml-2 h-4 w-4" />
-                                  تحديث الحالة
+                                <DropdownMenuItem 
+                                  className="flex items-center"
+                                  onClick={handleSendToPricing}
+                                >
+                                  <Send className="ml-2 h-4 w-4" />
+                                  إرسال للتسعير
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="flex items-center">
                                   <FileEdit className="ml-2 h-4 w-4" />
-                                  تعديل التفاصيل
+                                  تعديل البيانات
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
                         </TableRow>
+
                         <TableRow>
                           <TableCell>#REQ002</TableCell>
                           <TableCell>فاطمة محمد</TableCell>
@@ -170,9 +207,9 @@ const Requirements = () => {
                           <TableCell>حجز غرفة مزدوجة لمدة 3 ليالي</TableCell>
                           <TableCell>2024/03/19</TableCell>
                           <TableCell>
-                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
-                              <CheckCircle2 className="h-3 w-3 ml-1" />
-                              مكتمل
+                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <AlertCircle className="h-3 w-3 ml-1" />
+                              في التفاوض
                             </span>
                           </TableCell>
                           <TableCell>
@@ -183,14 +220,22 @@ const Requirements = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
+                                <DropdownMenuItem 
+                                  className="flex items-center"
+                                  onClick={handleSendToAccounting}
+                                >
+                                  <Send className="ml-2 h-4 w-4" />
+                                  إرسال للحسابات
+                                </DropdownMenuItem>
                                 <DropdownMenuItem className="flex items-center">
-                                  <FileCheck className="ml-2 h-4 w-4" />
-                                  عرض التفاصيل
+                                  <FileEdit className="ml-2 h-4 w-4" />
+                                  تعديل العرض
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
                         </TableRow>
+
                         <TableRow>
                           <TableCell>#REQ003</TableCell>
                           <TableCell>عبدالله علي</TableCell>
@@ -198,9 +243,9 @@ const Requirements = () => {
                           <TableCell>حجز تذاكر ذهاب وعودة</TableCell>
                           <TableCell>2024/03/18</TableCell>
                           <TableCell>
-                            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
                               <AlertCircle className="h-3 w-3 ml-1" />
-                              معلق
+                              مراجعة الحسابات
                             </span>
                           </TableCell>
                           <TableCell>
@@ -211,53 +256,32 @@ const Requirements = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="flex items-center">
-                                  <FileCheck className="ml-2 h-4 w-4" />
-                                  متابعة الحالة
+                                <DropdownMenuItem 
+                                  className="flex items-center"
+                                  onClick={handleSendToExecution}
+                                >
+                                  <Send className="ml-2 h-4 w-4" />
+                                  إرسال للتنفيذ
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="flex items-center">
-                                  <XCircle className="ml-2 h-4 w-4" />
-                                  إلغاء الطلب
+                                <DropdownMenuItem className="flex items-center text-red-600">
+                                  <Ban className="ml-2 h-4 w-4" />
+                                  رفض وإعادة التفاوض
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
                         </TableRow>
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
-              </TabsContent>
 
-              <TabsContent value="pending" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>قيد المعالجة</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>رقم الطلب</TableHead>
-                          <TableHead>العميل</TableHead>
-                          <TableHead>نوع الخدمة</TableHead>
-                          <TableHead>التفاصيل</TableHead>
-                          <TableHead>تاريخ الطلب</TableHead>
-                          <TableHead>الحالة</TableHead>
-                          <TableHead>الإجراءات</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
                         <TableRow>
                           <TableCell>#REQ004</TableCell>
-                          <TableCell>أحمد محمد</TableCell>
-                          <TableCell>حجز فندق</TableCell>
-                          <TableCell>حجز غرفة مزدوجة لمدة 3 ليالي</TableCell>
-                          <TableCell>2024/03/21</TableCell>
+                          <TableCell>خالد عمر</TableCell>
+                          <TableCell>رحلة عائلية</TableCell>
+                          <TableCell>رحلة شاملة لعائلة من 5 أفراد</TableCell>
+                          <TableCell>2024/03/17</TableCell>
                           <TableCell>
-                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
-                              <Clock className="h-3 w-3 ml-1" />
-                              قيد المعالجة
+                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <CheckCircle2 className="h-3 w-3 ml-1" />
+                              قيد التنفيذ
                             </span>
                           </TableCell>
                           <TableCell>
@@ -270,11 +294,11 @@ const Requirements = () => {
                               <DropdownMenuContent align="end">
                                 <DropdownMenuItem className="flex items-center">
                                   <FileCheck className="ml-2 h-4 w-4" />
-                                  تحديث الحالة
+                                  تحديث حالة التنفيذ
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="flex items-center">
                                   <FileEdit className="ml-2 h-4 w-4" />
-                                  تعديل التفاصيل
+                                  تعديل أوامر التشغيل
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
@@ -286,10 +310,10 @@ const Requirements = () => {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="completed" className="mt-6">
+              <TabsContent value="new" className="mt-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>مكتملة</CardTitle>
+                    <CardTitle>طلبات جديدة</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <Table>
@@ -312,9 +336,9 @@ const Requirements = () => {
                           <TableCell>حجز غرفة مزدوجة لمدة 3 ليالي</TableCell>
                           <TableCell>2024/03/21</TableCell>
                           <TableCell>
-                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
-                              <CheckCircle2 className="h-3 w-3 ml-1" />
-                              مكتمل
+                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <Clock className="h-3 w-3 ml-1" />
+                              قيد المعالجة
                             </span>
                           </TableCell>
                           <TableCell>
@@ -327,7 +351,11 @@ const Requirements = () => {
                               <DropdownMenuContent align="end">
                                 <DropdownMenuItem className="flex items-center">
                                   <FileCheck className="ml-2 h-4 w-4" />
-                                  عرض التفاصيل
+                                  تحديث الحالة
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center">
+                                  <FileEdit className="ml-2 h-4 w-4" />
+                                  تعديل التفاصيل
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
@@ -339,10 +367,10 @@ const Requirements = () => {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="on-hold" className="mt-6">
+              <TabsContent value="ready-for-pricing" className="mt-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>معلقة</CardTitle>
+                    <CardTitle>جاهزة للتسعير</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <Table>
@@ -385,6 +413,169 @@ const Requirements = () => {
                                 <DropdownMenuItem className="flex items-center">
                                   <XCircle className="ml-2 h-4 w-4" />
                                   إلغاء الطلب
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="in-negotiation" className="mt-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>في التفاوض</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>رقم الطلب</TableHead>
+                          <TableHead>العميل</TableHead>
+                          <TableHead>نوع الخدمة</TableHead>
+                          <TableHead>التفاصيل</TableHead>
+                          <TableHead>تاريخ الطلب</TableHead>
+                          <TableHead>الحالة</TableHead>
+                          <TableHead>الإجراءات</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>#REQ007</TableCell>
+                          <TableCell>أحمد محمد</TableCell>
+                          <TableCell>حجز فندق</TableCell>
+                          <TableCell>حجز غرفة مزدوجة لمدة 3 ليالي</TableCell>
+                          <TableCell>2024/03/21</TableCell>
+                          <TableCell>
+                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <Clock className="h-3 w-3 ml-1" />
+                              قيد المعالجة
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm">
+                                  الإجراءات
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem className="flex items-center">
+                                  <FileCheck className="ml-2 h-4 w-4" />
+                                  تحديث الحالة
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center">
+                                  <FileEdit className="ml-2 h-4 w-4" />
+                                  تعديل التفاصيل
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="accounting" className="mt-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>مراجعة الحسابات</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>رقم الطلب</TableHead>
+                          <TableHead>العميل</TableHead>
+                          <TableHead>نوع الخدمة</TableHead>
+                          <TableHead>التفاصيل</TableHead>
+                          <TableHead>تاريخ الطلب</TableHead>
+                          <TableHead>الحالة</TableHead>
+                          <TableHead>الإجراءات</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>#REQ008</TableCell>
+                          <TableCell>أحمد محمد</TableCell>
+                          <TableCell>حجز فندق</TableCell>
+                          <TableCell>حجز غرفة مزدوجة لمدة 3 ليالي</TableCell>
+                          <TableCell>2024/03/21</TableCell>
+                          <TableCell>
+                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <CheckCircle2 className="h-3 w-3 ml-1" />
+                              مكتمل
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm">
+                                  الإجراءات
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem className="flex items-center">
+                                  <FileCheck className="ml-2 h-4 w-4" />
+                                  عرض التفاصيل
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="execution" className="mt-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>قيد التنفيذ</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>رقم الطلب</TableHead>
+                          <TableHead>العميل</TableHead>
+                          <TableHead>نوع الخدمة</TableHead>
+                          <TableHead>التفاصيل</TableHead>
+                          <TableHead>تاريخ الطلب</TableHead>
+                          <TableHead>الحالة</TableHead>
+                          <TableHead>الإجراءات</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>#REQ009</TableCell>
+                          <TableCell>أحمد محمد</TableCell>
+                          <TableCell>حجز فندق</TableCell>
+                          <TableCell>حجز غرفة مزدوجة لمدة 3 ليالي</TableCell>
+                          <TableCell>2024/03/21</TableCell>
+                          <TableCell>
+                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm flex items-center w-fit">
+                              <CheckCircle2 className="h-3 w-3 ml-1" />
+                              مكتمل
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm">
+                                  الإجراءات
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem className="flex items-center">
+                                  <FileCheck className="ml-2 h-4 w-4" />
+                                  عرض التفاصيل
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>

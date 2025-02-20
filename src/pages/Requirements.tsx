@@ -411,7 +411,7 @@ const Requirements = () => {
                                   متابعة الحالة
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="flex items-center">
-                                  <XCircle className="ml-2 h-4 w-4" />
+                                  <Ban className="ml-2 h-4 w-4" />
                                   إلغاء الطلب
                                 </DropdownMenuItem>
                               </DropdownMenuContent>

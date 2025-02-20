@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import TransitForm from "@/Forms/TransitForm"; // Importing the TransitForm component
+
 import {
   Card,
   CardContent,
@@ -34,6 +36,12 @@ import {
 } from "lucide-react";
 
 const Pricing = () => {
+  const [showForm, setShowForm] = useState(false); // Adding state to manage form visibility
+
+  const handleButtonClick = () => {
+    setShowForm(true); // Setting showForm to true when the button is clicked
+  };
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
@@ -45,11 +53,13 @@ const Pricing = () => {
                 <h1 className="text-2xl font-bold">التسعير</h1>
                 <p className="text-gray-500 mt-1">إدارة وتحديث أسعار الخدمات والعروض</p>
               </div>
-              <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white">
+              <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white" onClick={handleButtonClick}> {/* Adding onClick handler */}
                 <FileText className="ml-2 h-4 w-4" />
                 إنشاء عرض سعر جديد
               </Button>
             </div>
+
+            {showForm && <TransitForm />} {/* Conditionally rendering the TransitForm */}
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <Card>

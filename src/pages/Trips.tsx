@@ -14,6 +14,8 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { FixedTripsTable } from "@/components/trips/FixedTripsTable";
 import { PrivateTripsTable } from "@/components/trips/PrivateTripsTable";
 import { ServicesTable } from "@/components/trips/ServicesTable";
+import { OperationOrders } from "@/components/trips/OperationOrders";
+import { NotificationSystem } from "@/components/trips/NotificationSystem";
 
 const Trips = () => {
   const [searchParams] = useSearchParams();
@@ -35,46 +37,58 @@ const Trips = () => {
               <Button className="bg-primary text-white">إضافة رحلة جديدة</Button>
             </div>
 
-            <Tabs defaultValue={currentTab} onValueChange={handleTabChange}>
-              <TabsList>
-                <TabsTrigger value="fixed">الرحلات الثابتة</TabsTrigger>
-                <TabsTrigger value="private">الرحلات الخاصة</TabsTrigger>
-                <TabsTrigger value="services">خدمات أخرى</TabsTrigger>
-              </TabsList>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <Tabs defaultValue={currentTab} onValueChange={handleTabChange}>
+                  <TabsList>
+                    <TabsTrigger value="fixed">الرحلات الثابتة</TabsTrigger>
+                    <TabsTrigger value="private">الرحلات الخاصة</TabsTrigger>
+                    <TabsTrigger value="services">خدمات أخرى</TabsTrigger>
+                  </TabsList>
 
-              <TabsContent value="fixed" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>الرحلات الثابتة</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <FixedTripsTable />
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                  <TabsContent value="fixed" className="mt-6">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>الرحلات الثابتة</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <FixedTripsTable />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
 
-              <TabsContent value="private" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>الرحلات الخاصة</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <PrivateTripsTable />
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                  <TabsContent value="private" className="mt-6">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>الرحلات الخاصة</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <PrivateTripsTable />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
 
-              <TabsContent value="services" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>الخدمات الإضافية</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ServicesTable />
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                  <TabsContent value="services" className="mt-6">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>الخدمات الإضافية</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ServicesTable />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
+
+                <div className="mt-6">
+                  <OperationOrders />
+                </div>
+              </div>
+
+              <div>
+                <NotificationSystem />
+              </div>
+            </div>
           </div>
         </main>
       </div>

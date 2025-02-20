@@ -33,9 +33,18 @@ import {
   AlertCircle,
   CheckCircle2
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Orders = () => {
   const [activeTab, setActiveTab] = useState("new");
+  const { toast } = useToast();
+
+  const handleStatusChange = (newStatus: string) => {
+    toast({
+      title: "تم تحديث حالة الطلب",
+      description: `تم تغيير حالة الطلب إلى ${newStatus}`
+    });
+  };
 
   return (
     <SidebarProvider>
@@ -46,14 +55,17 @@ const Orders = () => {
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-2xl font-bold">إدارة الطلبات</h1>
-                <p className="text-gray-500 mt-1">متابعة وإدارة طلبات العملاء عبر مراحل ال��مل المختلفة</p>
+                <p className="text-gray-500 mt-1">متابعة وإدارة طلبات العملاء عبر مراحل العمل المختلفة</p>
               </div>
               <div className="flex gap-4">
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => handleStatusChange("تم التصدير")}>
                   <FileCheck className="ml-2 h-4 w-4" />
                   تصدير التقرير
                 </Button>
-                <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white">
+                <Button 
+                  className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white"
+                  onClick={() => handleStatusChange("طلب جديد")}
+                >
                   <FileEdit className="ml-2 h-4 w-4" />
                   طلب جديد
                 </Button>
@@ -166,8 +178,11 @@ const Orders = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="flex items-center">
-                                  <FileEdit className="ml-2 h-4 w-4" />
+                                <DropdownMenuItem 
+                                  className="flex items-center"
+                                  onClick={() => handleStatusChange("تم الإرسال للتسعير")}
+                                >
+                                  <Send className="ml-2 h-4 w-4" />
                                   إرسال للتسعير
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="flex items-center">
@@ -227,7 +242,10 @@ const Orders = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="flex items-center">
+                                <DropdownMenuItem 
+                                  className="flex items-center"
+                                  onClick={() => handleStatusChange("تم الإرسال للتفاوض")}
+                                >
                                   <Send className="ml-2 h-4 w-4" />
                                   إرسال للتفاوض
                                 </DropdownMenuItem>
@@ -248,7 +266,7 @@ const Orders = () => {
               <TabsContent value="execution" className="mt-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>طلبات قيد التنف��ذ</CardTitle>
+                    <CardTitle>طلبات قيد التنفيذ</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <Table>
@@ -342,12 +360,15 @@ const Orders = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem className="flex items-center">
+                                <DropdownMenuItem 
+                                  className="flex items-center"
+                                  onClick={() => handleStatusChange("تم الإرسال للموافقة")}
+                                >
                                   <FileCheck className="ml-2 h-4 w-4" />
                                   إرسال للموافقة
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="flex items-center">
-                                  <UserCheck className="ml-2 h-4 w-4" />
+                                  <FileEdit className="ml-2 h-4 w-4" />
                                   تحديث حالة التفاوض
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
